@@ -1,0 +1,39 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+
+public class WebScraper {
+    public static void main(String[] args)
+        String url = "https://example.com";
+
+        try {
+            
+            Document document = Jsoup.connect(url).get();
+
+            String title = document.title();
+            System.out.println("Title: " + title);
+
+            Elements headings = document.select("h1, h2, h3");
+            System.out.println("\nHeadings:");
+            for (Element heading : headings) {
+                System.out.println(heading.text());
+            }
+            Elements paragraphs = document.select("p");
+            System.out.println("\nParagraphs:");
+            for (Element paragraph : paragraphs) {
+                System.out.println(paragraph.text());
+            }
+            Elements links = document.select("a[href]");
+            System.out.println("\nLinks:");
+            for (Element link : links) {
+                System.out.println(link.attr("href") + " - " + link.text());
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
